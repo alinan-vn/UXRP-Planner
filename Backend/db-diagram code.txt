@@ -1,0 +1,100 @@
+Table contributor {
+  id int PK
+  premium boolean
+  first_name str
+  middle_name str
+  last_name str
+  pronouns str
+  
+  contributor_about_detail_id int [ref: - contributor_about_detail.id]
+  contributor_job_detail_id int [ref: - contributor_job_detail.id]
+  contributor_about_prompt_id int [ref: - contributor_about_prompt.id]
+}
+
+Table bookmarked_case_study {
+  in int PK
+  contributor_id int [ref: - contributor.id]
+  case_study_id int [ref: > case_study.id]
+}
+
+Table contributor_about_prompt {
+  id int PK
+  music_prompt_input str
+  prompt_one_id int [ref: - prompt.id]
+  prompt_one_input str
+  prompt_two_id int [ref: - prompt.id]
+  prompt_two_input str
+}
+
+Table prompt {
+  id int PK
+  name str
+}
+
+Table contributor_about_detail {
+  id int PK
+  location_based str
+  type_of_work str
+  self_description str
+  short_long_term_goals str
+}
+
+Table contributor_about_detail_industry {
+  id int PK
+  contributor_about_detail_id int [ref: - contributor_about_detail.id]
+  industry_id int [ref: - industry.id]
+}
+
+Table contributor_about_detail_skills {
+  id int PK
+  contributor_about_detail_id int [ref: - contributor_about_detail.id]
+  skill_id int [ref: - skill.id]
+}
+
+Table skill {
+  id int PK
+  name str
+}
+
+Table contributor_job_detail {
+  id int PK
+  job_position str
+  job_position_company str
+  job_position_location str
+  current_location str
+}
+
+Table case_study {
+  id int PK
+  title str
+  abstract str
+  problem_writeup str // will change
+  problem_image str // will change
+  research_writeup str // will change
+  research_image str // will change
+  solutions_writeup str // will change
+  solutions_image str // will change
+  outcome_writeup str // will change
+  outcome_image str // will change
+  
+  contributor_id int [ref: > contributor.id]
+}
+
+Table case_study_industries {
+  id int PK
+  case_study_id int [ref: - case_study.id]
+  industry_id int [ref: - industry.id]
+}
+
+Table case_study_comments {
+  id int PK
+  likes int // gets updated when someone likes the comment 
+  comment str 
+  case_study_id int [ref: > case_study.id]
+  contributor_id int [ref: > contributor.id] // commentor, not case study writer
+}
+
+Table industry {
+  id int PK
+  name str
+}
